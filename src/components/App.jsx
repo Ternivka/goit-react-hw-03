@@ -20,11 +20,11 @@ function App() {
   const [filteredContacts, setFilteredContacts] = useState(contactArr);
 
   const handleInputChange = (e) => {
-    const searchValue = e.target.value.toLowerCase();
+    const searchValue = e.target.value;
     setSearchItem(searchValue);
 
     const filteredItems = contactArr.filter((item) =>
-      item.name.toLowerCase().includes(searchValue)
+      item.name.toLowerCase().includes(searchValue.toLowerCase())
     );
     setFilteredContacts(filteredItems);
   };
