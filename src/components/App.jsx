@@ -18,7 +18,7 @@ function App() {
     if (savedContacts?.length) {
       return savedContacts;
     }
-    return [];
+    return users;
   });
   const [filteredContacts, setFilteredContacts] = useState(contactArr);
 
