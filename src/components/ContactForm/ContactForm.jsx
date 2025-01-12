@@ -1,22 +1,39 @@
-import { Field, Form, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import s from "./ContactFrom.module.css";
-
+import * as Yup from "yup";
 const ContactForm = ({ addContacts }) => {
   const handleSubmit = (values, actions) => {
     addContacts(values);
     actions.resetForm();
   };
+  const registerSchema = Yup.object().shape({
+    name: Yup.string()
+      .min(3, "Too short!")
+      .max(50, "Too long!")
+      .required("Required"),
+    number: Yup.string()
+      .matches(/^\d+$/, "Number must contain only digits")
+      .min(3, "Too short!")
+      .max(50, "Too long!")
+      .required("Required"),
+  });
   return (
     <div>
-      <Formik onSubmit={handleSubmit} initialValues={{ name: "", number: "" }}>
+      <Formik
+        onSubmit={handleSubmit}
+        initialValues={{ name: "", number: "" }}
+        validationSchema={registerSchema}
+      >
         <Form className={s.container}>
           <label>
             <span>Name</span>
             <Field type="text" name="name" id="name" className={s.username} />
           </label>
+          <ErrorMessage name="name" className={s.error} component="div" />
           <label>
             <span>Number</span>
             <Field type="tel" name="number" id="number" className={s.number} />
+            <ErrorMessage name="number" className={s.error} component="div" />
           </label>
           <button type="submit">Add contact</button>
         </Form>
