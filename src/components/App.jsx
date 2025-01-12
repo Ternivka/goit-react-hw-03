@@ -3,7 +3,7 @@ import ContactForm from "./ContactForm/ContactForm";
 import SearchBox from "./SearchBox/SearchBox";
 import ContactList from "./ContactList/ContactList";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 const users = [
   { id: "id-1", name: "Rosie Simpson", number: "459-12-56" },
@@ -13,8 +13,12 @@ const users = [
 ];
 function App() {
   const [searchItem, setSearchItem] = useState("");
-  const [contactArr, setContactArr] = useState(users);
-  const [filteredContacts, setFilteredContacts] = useState(users);
+  const [contactArr, setContactArr] = useState(() => {
+    const savedContacts = JSON.parse(localStorage.getItem("contacts"));
+    return savedContacts || users;
+  });
+  const [filteredContacts, setFilteredContacts] = useState(contactArr);
+
   const handleInputChange = (e) => {
     const searchValue = e.target.value.toLowerCase();
     setSearchItem(searchValue);
@@ -33,6 +37,11 @@ function App() {
     setContactArr(updatedContacts);
     setFilteredContacts(updatedContacts);
   };
+
+  useEffect(() => {
+    localStorage.setItem("contacts", JSON.stringify(contactArr));
+  }, [contactArr]);
+
   return (
     <div>
       <h1>Phonebook</h1>
