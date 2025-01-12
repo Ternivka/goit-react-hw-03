@@ -15,7 +15,10 @@ function App() {
   const [searchItem, setSearchItem] = useState("");
   const [contactArr, setContactArr] = useState(() => {
     const savedContacts = JSON.parse(localStorage.getItem("contacts"));
-    return savedContacts || users;
+    if (savedContacts?.length) {
+      return savedContacts;
+    }
+    return [];
   });
   const [filteredContacts, setFilteredContacts] = useState(contactArr);
 
@@ -28,6 +31,11 @@ function App() {
     );
     setFilteredContacts(filteredItems);
   };
+
+  const deleteContacts = (id) => {
+    setFilteredContacts((prev) => prev.filter((item) => item.id !== id));
+  };
+
   const addContacts = (newContact) => {
     const newContactWithId = {
       ...newContact,
@@ -50,7 +58,10 @@ function App() {
         handleInputChange={handleInputChange}
         searchItem={searchItem}
       />
-      <ContactList contactArr={filteredContacts} />
+      <ContactList
+        onDeleteContacts={deleteContacts}
+        contactArr={filteredContacts}
+      />
     </div>
   );
 }

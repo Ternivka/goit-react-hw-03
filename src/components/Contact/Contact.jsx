@@ -1,7 +1,7 @@
 import s from "./Contact.module.css";
 import { IoPerson, IoCall } from "react-icons/io5";
 
-const Contact = ({ name, number, id }) => {
+const Contact = ({ name, number, id, onDeleteContacts }) => {
   return (
     <li key={id} className={s.item}>
       <div>
@@ -15,7 +15,7 @@ const Contact = ({ name, number, id }) => {
         </p>
       </div>
 
-      <button>Delete</button>
+      <button onClick={() => onDeleteContacts(id)}>Delete</button>
     </li>
   );
 };
