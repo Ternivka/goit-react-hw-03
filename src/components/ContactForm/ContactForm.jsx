@@ -9,14 +9,14 @@ const ContactForm = ({ addContacts }) => {
   return (
     <div>
       <Formik onSubmit={handleSubmit} initialValues={{ name: "", number: "" }}>
-        <Form className={s.divClass}>
+        <Form className={s.container}>
           <label>
             <span>Name</span>
-            <Field type="text" name="name" id="name" />
+            <Field type="text" name="name" id="name" className={s.username} />
           </label>
           <label>
             <span>Number</span>
-            <Field type="tel" name="number" id="number" />
+            <Field type="tel" name="number" id="number" className={s.number} />
           </label>
           <button type="submit">Add contact</button>
         </Form>

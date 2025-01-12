@@ -1,24 +1,18 @@
-.container {
-  border: solid white;
-  border-radius: 8px;
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+* {
+  box-sizing: border-box;
 }
 
-.container label {
+.container {
   display: flex;
   flex-direction: column;
-  width: 100%;
-}
-.username,
-.number {
-  margin-bottom: 20px;
+  justify-content: start;
+  line-height: 28px;
+  align-items: center;
+  margin-top: 20px;
 }
 .container input {
   border: 2px solid gray;
+  width: 400px;
   height: 2.5em;
   padding-left: 0.8em;
   outline: none;
