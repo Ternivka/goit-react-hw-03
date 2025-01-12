@@ -1,0 +1,27 @@
+ul {
+  padding: 0;
+}
+
+.item {
+  border: solid white;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding-left: 30px;
+  padding-right: 10px;
+  width: 340px;
+}
+.item p {
+  position: relative;
+}
+
+.item button {
+  margin-left: 50px;
+}
+.icon {
+  position: relative;
+  top: 3px;
+  left: -10px;
+}
