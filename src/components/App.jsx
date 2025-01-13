@@ -5,35 +5,20 @@ import ContactList from "./ContactList/ContactList";
 
 import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
-const users = [
-  { id: "id-1", name: "Rosie Simpson", number: "459-12-56" },
-  { id: "id-2", name: "Hermione Kline", number: "443-89-12" },
-  { id: "id-3", name: "Eden Clements", number: "645-17-79" },
-  { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
-];
+
 function App() {
   const [searchItem, setSearchItem] = useState("");
   const [contactArr, setContactArr] = useState(() => {
     const savedContacts = JSON.parse(localStorage.getItem("contacts"));
-    if (savedContacts?.length) {
-      return savedContacts;
-    }
-    return users;
+    return savedContacts?.length ? savedContacts : [];
   });
-  const [filteredContacts, setFilteredContacts] = useState(contactArr);
 
   const handleInputChange = (e) => {
-    const searchValue = e.target.value;
-    setSearchItem(searchValue);
-
-    const filteredItems = contactArr.filter((item) =>
-      item.name.toLowerCase().includes(searchValue.toLowerCase())
-    );
-    setFilteredContacts(filteredItems);
+    setSearchItem(e.target.value);
   };
 
   const deleteContacts = (id) => {
-    setFilteredContacts((prev) => prev.filter((item) => item.id !== id));
+    setContactArr((prev) => prev.filter((item) => item.id !== id));
   };
 
   const addContacts = (newContact) => {
@@ -41,23 +26,22 @@ function App() {
       ...newContact,
       id: nanoid(),
     };
-    const updatedContacts = [...contactArr, newContactWithId];
-    setContactArr(updatedContacts);
-    setFilteredContacts(updatedContacts);
+    setContactArr((prev) => [...prev, newContactWithId]);
   };
 
   useEffect(() => {
     localStorage.setItem("contacts", JSON.stringify(contactArr));
   }, [contactArr]);
 
+  const filteredContacts = contactArr.filter((item) =>
+    item.name.toLowerCase().includes(searchItem.toLowerCase())
+  );
+
   return (
     <div>
       <h1>Phonebook</h1>
       <ContactForm addContacts={addContacts} />
-      <SearchBox
-        handleInputChange={handleInputChange}
-        searchItem={searchItem}
-      />
+      <SearchBox handleInputChange={handleInputChange} searchItem={searchItem} />
       <ContactList
         onDeleteContacts={deleteContacts}
         contactArr={filteredContacts}
